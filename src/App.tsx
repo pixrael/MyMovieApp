@@ -1,34 +1,42 @@
-import React, { useEffect } from 'react';
-import logo from './logo.svg';
+import { useEffect } from 'react';
 import './App.css';
-import axios from 'axios';
+import { useGetMoviesQuery } from './movies/moviesSlice';
+import { Route, Routes } from 'react-router-dom';
+
+import { MyList } from './pages/MyList';
+import Home from './pages/Home';
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const TMDB_BASE_URL = process.env.REACT_APP_TMDB_BASE_URL;
 
 function App() {
 
+  const {
+    data: posts,
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  } = useGetMoviesQuery({})
+
+
   useEffect(() => {
-    const url = `${TMDB_BASE_URL}movie/11?api_key=${API_KEY}`;
-    axios.get(url).then(res => console.log('Res ', res.data));
-  }, [])
+    console.log('-- !!!', posts,
+      isLoading,
+      isSuccess,
+      isError,
+      error);
+  },
+    [posts,
+      isLoading,
+      isSuccess,
+      isError,
+      error]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path='/my-list' element={<MyList />} />
+    </Routes>
   );
 }
 

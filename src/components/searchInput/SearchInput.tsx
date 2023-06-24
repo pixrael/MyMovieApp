@@ -3,7 +3,8 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
-export default function SearchInput() {
+export default function SearchInput({ onSearch }: { onSearch: Function }) {
+
     return (
         <Paper
             component="form"
@@ -13,6 +14,7 @@ export default function SearchInput() {
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="Search Movies"
                 inputProps={{ 'aria-label': 'search movies' }}
+                onChange={evt => onSearch(evt.target.value)}
             />
             <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
                 <SearchIcon />

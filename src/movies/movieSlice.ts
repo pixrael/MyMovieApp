@@ -9,7 +9,15 @@ export const movieSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: URL_TMBD_API }),
   endpoints: builder => ({
     getPopularMovies: builder.query({
-      query: (page) => `/movie/popu lar?api_key=${TMDB_API_KEY}&page=${page}`,
+      query: (page: number) => `/movie/popular?api_key=${TMDB_API_KEY}&page=${page}`,
+      transformErrorResponse: (error: any) => <SerializedError>(
+        {
+          message: error.data.status_message,
+          code: error.data.status_code
+        })
+    }),
+    searchMovie: builder.query({
+      query: ({ query, page }: { query: string, page: number }) => `/search/movie?api_key=${TMDB_API_KEY}&query=${query}&page=${page}`,
       transformErrorResponse: (error: any) => <SerializedError>(
         {
           message: error.data.status_message,
@@ -19,4 +27,4 @@ export const movieSlice = createApi({
   })
 })
 
-export const { useGetPopularMoviesQuery } = movieSlice
+export const { useGetPopularMoviesQuery, useSearchMovieQuery } = movieSlice

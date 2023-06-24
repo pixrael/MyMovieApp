@@ -1,15 +1,16 @@
-import { useGetPopularMoviesQuery } from "../../movies/movieSlice";
+import { useSearchMovieQuery } from "../../movies/movieSlice";
 import GalleryImageList from "../galleryImageList/GalleryImageList";
 import { SerializedError } from "@reduxjs/toolkit";
 
-function PopularImageList({ page }: { page: number }) {
+function SearchMovies({ query, page }: { query: string, page: number }) {
+
     const {
         data: movies,
         isLoading,
         isSuccess,
         isError,
         error
-    } = useGetPopularMoviesQuery(page) as {
+    } = useSearchMovieQuery({ query, page }) as {
         data?: any;
         isLoading: boolean;
         isSuccess: boolean;
@@ -24,4 +25,4 @@ function PopularImageList({ page }: { page: number }) {
     </>)
 }
 
-export default PopularImageList;
+export default SearchMovies;

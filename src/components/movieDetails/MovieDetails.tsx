@@ -53,7 +53,7 @@ function MovieDetails({ idMovie }: { idMovie: string }) {
                     </Stack>
                 </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }} className="overview-container">
-                        <b>overview:</b>{details?.overview}<br />
+                        <b>overview: </b>{details?.overview}<br />
                     </Typography></Box>
 
             </Stack>

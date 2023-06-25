@@ -5,14 +5,14 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 720, 
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
+    p: 1,
 };
 
-function InfoModal({ show, open, close, children }: { show: boolean, open: Function, close: Function, children: any }) {
+function CustomModal({ show, open, close, children }: { show: boolean, open: Function, close: Function, children: any }) {
 
     return (<Modal
         open={show}
@@ -26,4 +26,4 @@ function InfoModal({ show, open, close, children }: { show: boolean, open: Funct
     </Modal >)
 }
 
-export default InfoModal;
+export default CustomModal;

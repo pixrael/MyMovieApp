@@ -1,6 +1,8 @@
-import { Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import { useGetDetailsMovieQuery } from "../../movies/movieSlice";
 import { SerializedError } from "@reduxjs/toolkit";
+import './MovieDetails.scss'
+import { IMG_BASE_URL } from "../../constants";
 
 function MovieDetails({ idMovie }: { idMovie: string }) {
 
@@ -15,19 +17,48 @@ function MovieDetails({ idMovie }: { idMovie: string }) {
     return (<>
         {isLoading && <>is Loading ...</>}
         {isSuccess && <>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-                <b>title:</b>{details?.title}<br />
-                <b>year:</b>{details?.year}<br />
-                <b>releaseDate:</b>{details?.releaseDate}<br />
-                <b>genres:</b>{details?.genres}<br />
-                <b>tagLine:</b>{details?.tagLine}<br />
-                <b>overview:</b>{details?.overview}<br />
-                <b>popularity:</b>{details?.popularity}<br />
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                selected movie: {idMovie}
-            </Typography>
+
+            <Stack
+                direction="row"
+                divider={<Divider orientation="vertical" flexItem />}
+                spacing={0}
+            >
+
+                <Box className="left">
+                    <Box
+                        className="poster-img"
+                        component="img"                        
+                        alt={details?.title}
+                        src={`${IMG_BASE_URL}${details?.posterPath}`}
+
+                    />
+                </Box>
+                <Box className="right"><Typography id="modal-modal-title" variant="h6" fontSize={12}>
+                    <Stack
+                        direction="row"
+                        divider={<Divider orientation="vertical" flexItem />}
+                        spacing={0}
+                    >
+                        <Box className="info-container">
+                            <Typography fontSize={24}>{details?.title} ({details?.year})</Typography>
+                            {details?.releaseDate}<br />
+                            <b>genres: </b>{details?.genres.join(', ')}<br />
+                            <b>vote: </b>{details?.voteAverage}<br /><br />
+                            {details?.tagLine}
+                        </Box>
+                        <Box className="rate-container">
+                            RIGHT
+                        </Box>
+
+                    </Stack>
+                </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }} className="overview-container">
+                        <b>overview:</b>{details?.overview}<br />
+                    </Typography></Box>
+
+            </Stack>
+
+
         </>}
         {isError && <>error {(error as SerializedError)?.message}</>}
     </>)

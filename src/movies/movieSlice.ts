@@ -35,7 +35,9 @@ export const movieSlice = createApi({
           genres: response.genres.map((g: any) => g.name),
           tagLine: response.tagline,
           overview: response.overview,
-          popularity: response.popularity
+          popularity: response.popularity,
+          posterPath: response.poster_path,
+          voteAverage: response.vote_average,
         }
       },
       transformErrorResponse: (error: any) => <SerializedError>(

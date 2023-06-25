@@ -15,8 +15,9 @@ function srcset(image: string, size: number, rows = 1, cols = 1) {
   };
 }
 
-export default function GalleryImageList({ imagesData }: {
-  imagesData: any[]
+export default function GalleryImageList({ imagesData, onSelectedMovie }: {
+  imagesData: any[],
+  onSelectedMovie: Function
 }) {
   return (
     <ImageList
@@ -39,7 +40,9 @@ export default function GalleryImageList({ imagesData }: {
               <IconButton
                 sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                 aria-label={`info about ${item.title}`}
-                onClick={() => console.log('clicked ', item.title)}
+                onClick={() => {
+                  onSelectedMovie(item.id);
+                }}
               >
                 <InfoIcon />
               </IconButton>

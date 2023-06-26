@@ -26,12 +26,11 @@ function Home() {
         isError
     } = useGetPopularMoviesQuery(1)
 
-    return (<>
-        <Navbar />
+    return (<>        
         <SearchInput onSearch={onSearch} />
-        <PaginationOutlined count={isSuccess ? movies.total_pages : 5} isDisabled={isLoading || isError} onPageChange={onPageChange} />
         {!searchKeyword && <PopularImageList page={page} />}
         {searchKeyword && <SearchMovies query={searchKeyword} page={page} />}
+        <PaginationOutlined count={isSuccess ? movies.total_pages : 5} isDisabled={isLoading || isError} onPageChange={onPageChange} />
     </>)
 }
 

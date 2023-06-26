@@ -10,11 +10,23 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import MovieIcon from '@mui/icons-material/Movie';
+import { useNavigate } from 'react-router-dom';
+import store from '../../app/store';
+import { authSlice, selectSessionId } from '../../api/authSlice';
+import { useSelector } from 'react-redux';
+import { Alert, Snackbar } from '@mui/material';
+import { useState } from 'react';
+import LoggedGuestButton from '../LoggedGuestButton/LoggedGuestButton';
 
 
-const pages = ['Popular', 'My List'];
+const pages = [
+    { label: 'Popular', redirectTo: '/' },
+    { label: 'My List', redirectTo: '/my-list' },
+
+];
 
 function Navbar() {
+    const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -24,6 +36,38 @@ function Navbar() {
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
+
+    const redirectToPage = (pathTo: string) => {
+        console.log('redirect to ', pathTo);
+        navigate(pathTo);
+    }
+
+    const loginAsGuest = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        store.dispatch(authSlice.endpoints.getSessionId.initiate({})).unwrap()
+        .catch(err => {
+            setErrorMsg(err.message);
+            setOpen(true);
+        });
+    }
+    const guestSessionData = useSelector(selectSessionId);
+
+
+
+
+    ////
+    const [open, setOpen] = useState(false);
+    const [erroMsg, setErrorMsg] = useState('');
+
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+    ////
+
+
 
     return (
         <AppBar position="static">
@@ -78,8 +122,8 @@ function Navbar() {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                <MenuItem key={page.label} onClick={() => redirectToPage(page.redirectTo)}>
+                                    <Typography textAlign="center">{page.label}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -106,18 +150,25 @@ function Navbar() {
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
+                                key={page.label}
+                                onClick={() => redirectToPage(page.redirectTo)}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                {page}
+                                {page.label}
                             </Button>
                         ))}
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Button color="inherit" onClick={()=>console.log('login as guest')}>Login as guest</Button>                        
+                        {!guestSessionData && <Button variant="outlined" color="inherit" onClick={(event) => loginAsGuest(event)}>Login as guest</Button>}
+                        {guestSessionData && <LoggedGuestButton />}
+
                     </Box>
+                    <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                            {erroMsg}
+                        </Alert>
+                    </Snackbar>
                 </Toolbar>
             </Container>
         </AppBar>

@@ -6,7 +6,6 @@ import { IMG_BASE_URL } from "../../constants";
 import store from "../../app/store";
 import { authSlice, selectSessionId } from "../../api/authSlice";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import AddRateSlider from "../addRate/AddRate";
 
 function MovieDetails({ idMovie }: { idMovie: string }) {
@@ -23,7 +22,7 @@ function MovieDetails({ idMovie }: { idMovie: string }) {
         store.dispatch(authSlice.endpoints.getSessionId.initiate({}));
     }
 
-    const sessionId = useSelector(selectSessionId);
+    const guestSessionData = useSelector(selectSessionId);
 
     return (<>
         {isLoading && <>is Loading ...</>}
@@ -58,8 +57,8 @@ function MovieDetails({ idMovie }: { idMovie: string }) {
                             {details?.tagLine}
                         </Box>
                         <Box className="rate-container">
-                            {!sessionId && <Button onClick={loginAsGuest} >Login as guest to rate </Button>}
-                            {sessionId && <AddRateSlider idMovie={details?.id} />}
+                            {!guestSessionData && <Button onClick={loginAsGuest} >Login as guest to rate </Button>}
+                            {guestSessionData && <AddRateSlider idMovie={details?.id} />}
 
                         </Box>
 

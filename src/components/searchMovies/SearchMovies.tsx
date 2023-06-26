@@ -1,5 +1,5 @@
 import useModal from "../../hooks/useModal";
-import { useSearchMovieQuery } from "../../movies/movieSlice";
+import { useSearchMovieQuery } from "../../api/movieSlice";
 import GalleryImageList from "../galleryImageList/GalleryImageList";
 import { SerializedError } from "@reduxjs/toolkit";
 import CustomModal from "../customModal/CustomModal";

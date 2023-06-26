@@ -1,8 +1,13 @@
-import { Box, Divider, Stack, Typography } from "@mui/material";
-import { useGetDetailsMovieQuery } from "../../movies/movieSlice";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { useGetDetailsMovieQuery } from "../../api/movieSlice";
 import { SerializedError } from "@reduxjs/toolkit";
 import './MovieDetails.scss'
 import { IMG_BASE_URL } from "../../constants";
+import store from "../../app/store";
+import { authSlice, selectSessionId } from "../../api/authSlice";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import AddRateSlider from "../addRate/AddRate";
 
 function MovieDetails({ idMovie }: { idMovie: string }) {
 
@@ -14,6 +19,12 @@ function MovieDetails({ idMovie }: { idMovie: string }) {
         error
     } = useGetDetailsMovieQuery(idMovie);
 
+    const loginAsGuest = () => {
+        store.dispatch(authSlice.endpoints.getSessionId.initiate({}));
+    }
+
+    const sessionId = useSelector(selectSessionId);
+    
     return (<>
         {isLoading && <>is Loading ...</>}
         {isSuccess && <>
@@ -27,7 +38,7 @@ function MovieDetails({ idMovie }: { idMovie: string }) {
                 <Box className="left">
                     <Box
                         className="poster-img"
-                        component="img"                        
+                        component="img"
                         alt={details?.title}
                         src={`${IMG_BASE_URL}${details?.posterPath}`}
 
@@ -47,7 +58,9 @@ function MovieDetails({ idMovie }: { idMovie: string }) {
                             {details?.tagLine}
                         </Box>
                         <Box className="rate-container">
-                            RIGHT
+                            {!sessionId && <Button onClick={loginAsGuest} >Login as guest to rate </Button>}
+                            {sessionId && <AddRateSlider/>}
+
                         </Box>
 
                     </Stack>

@@ -29,6 +29,7 @@ export const movieSlice = createApi({
       query: (idMovie: string) => `/movie/${idMovie}?api_key=${TMDB_API_KEY}`,
       transformResponse: (response: any) => {
         return {
+          id: response.id,
           title: response.title,
           year: getYearFromDate(response.release_date),
           releaseDate: response.release_date,
@@ -45,8 +46,22 @@ export const movieSlice = createApi({
           message: error.data.status_message,
           code: error.data.status_code
         })
-    })
+    }),
+    rateMovie: builder.mutation({
+      query: ({ idMovie, body, sessionId }: { idMovie: string, body: { value: string }, sessionId: string }) => ({
+        url: `/movie/${idMovie}/rating?api_key=${TMDB_API_KEY}&guest_session_id=${sessionId}`,
+        method: 'POST',
+        body
+      }),
+
+
+      transformErrorResponse: (error: any) => <SerializedError>(
+        {
+          message: error.data.status_message,
+          code: error.data.status_code
+        })
+    }),
   })
 })
 
-export const { useGetPopularMoviesQuery, useSearchMovieQuery, useGetDetailsMovieQuery } = movieSlice
+export const { useGetPopularMoviesQuery, useSearchMovieQuery, useGetDetailsMovieQuery, useRateMovieMutation } = movieSlice

@@ -3,8 +3,11 @@ import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
 import { Button, Stack } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './AddRate.scss'
+import { useRateMovieMutation } from '../../api/movieSlice';
+import { useSelector } from 'react-redux';
+import { selectSessionId } from '../../api/authSlice';
 
 function ValueLabelComponent(props: SliderValueLabelProps) {
     const { children, value } = props;
@@ -16,13 +19,31 @@ function ValueLabelComponent(props: SliderValueLabelProps) {
     );
 }
 
-export default function AddRateSlider() {
+export default function AddRateSlider({ idMovie }: { idMovie: string }) {
+    const [rateMovie, response] = useRateMovieMutation()
     const [rateValue, setRateValue] = useState(5);
+    const sessionId = useSelector(selectSessionId);
+    const [hideSuccessMsg, setHideSuccessMsg] = useState(true);
     const rate = () => {
-        console.log('rate: ', rateValue);
         //dispatch the action to rate the movie
-
+        rateMovie({ idMovie, body: { value: rateValue + '' }, sessionId });
     }
+
+    useEffect(() => {
+        console.log('response ', response);
+        let timeout: any;
+        if (response.endpointName === 'rateMovie' && response.isSuccess) {
+            setHideSuccessMsg(false);
+            timeout = setTimeout(() => {
+                setHideSuccessMsg(true);
+            }, 3000);
+        }
+
+        return () => { timeout && clearTimeout(timeout); }
+
+
+    }, [response])
+
     return (
         <Box >
             <Typography gutterBottom>Rate this movie</Typography>
@@ -38,8 +59,14 @@ export default function AddRateSlider() {
                 value={rateValue}
                 onChange={(evt: any) => setRateValue(evt.target?.value)}
                 step={0.5}
+                disabled={response.endpointName === 'rateMovie' && (response.isLoading || response.isSuccess)}
             />
-            <Button className="rate-button" variant="contained" onClick={rate}> Rate it!</Button>
+            <Button className="rate-button" variant="contained" onClick={rate} disabled={response.endpointName === 'rateMovie' && (response.isLoading || response.isSuccess)} > Rate {rateValue}</Button>
+            {response.endpointName === 'rateMovie' && response.isSuccess && !hideSuccessMsg && <Typography fontSize={10}> Rated successfully </Typography>}
+            {response.endpointName === 'rateMovie' && response.isError && <Typography fontSize={10}> Error trying to rate {(response.error as any).message}</Typography>}
+
+
+
         </Box>
     );
 }

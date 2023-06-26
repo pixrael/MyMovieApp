@@ -24,7 +24,7 @@ function MovieDetails({ idMovie }: { idMovie: string }) {
     }
 
     const sessionId = useSelector(selectSessionId);
-    
+
     return (<>
         {isLoading && <>is Loading ...</>}
         {isSuccess && <>
@@ -59,7 +59,7 @@ function MovieDetails({ idMovie }: { idMovie: string }) {
                         </Box>
                         <Box className="rate-container">
                             {!sessionId && <Button onClick={loginAsGuest} >Login as guest to rate </Button>}
-                            {sessionId && <AddRateSlider/>}
+                            {sessionId && <AddRateSlider idMovie={details?.id} />}
 
                         </Box>
 

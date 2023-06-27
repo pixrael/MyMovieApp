@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { selectSessionId } from "../api/authApi";
-import { useGetMyRatedMoviesQuery } from "../api/movieApi";
+import { selectSessionId } from "../store/api/authApi";
+import { useGetMyRatedMoviesQuery } from "../store/api/movieApi";
 import MyListTable from "../components/myListTable/MyListTable";
 import { CircularProgress, Typography } from "@mui/material";
 

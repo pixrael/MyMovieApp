@@ -1,10 +1,10 @@
 import { Box, Button, CircularProgress, Divider, Stack, Typography } from "@mui/material";
-import { useGetDetailsMovieQuery } from "../../api/movieApi";
+import { useGetDetailsMovieQuery } from "../../store/api/movieApi";
 import { SerializedError } from "@reduxjs/toolkit";
 import './MovieDetails.scss'
 import { IMG_BASE_URL } from "../../constants";
-import store from "../../app/store";
-import { authApi, selectSessionId } from "../../api/authApi";
+import store from "../../store/store";
+import { authApi, selectSessionId } from "../../store/api/authApi";
 import { useSelector } from "react-redux";
 import AddRateSlider from "../addRate/AddRate";
 

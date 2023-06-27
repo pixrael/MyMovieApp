@@ -5,9 +5,11 @@ import Box from '@mui/material/Box';
 import { Button, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import './AddRate.scss'
-import { useRateMovieMutation } from '../../api/movieApi';
+import { useRateMovieMutation } from '../../store/api/movieApi';
 import { useSelector } from 'react-redux';
-import { selectSessionId } from '../../api/authApi';
+import { selectSessionId } from '../../store/api/authApi';
+import store from '../../store/store';
+import { allowExit, blockExit } from '../../store/slice/detailModalSlice';
 
 function ValueLabelComponent(props: SliderValueLabelProps) {
     const { children, value } = props;
@@ -25,18 +27,19 @@ export default function AddRateSlider({ idMovie }: { idMovie: string }) {
     const sessionId = useSelector(selectSessionId);
     const [hideSuccessMsg, setHideSuccessMsg] = useState(true);
     const rate = () => {
+        store.dispatch(blockExit());
         //dispatch the action to rate the movie
         rateMovie({ idMovie, body: { value: rateValue + '' }, sessionId });
     }
 
     useEffect(() => {
-        console.log('response ', response);
         let timeout: any;
         if (response.endpointName === 'rateMovie' && response.isSuccess) {
             setHideSuccessMsg(false);
             timeout = setTimeout(() => {
                 setHideSuccessMsg(true);
-            }, 3000);
+                store.dispatch(allowExit());
+            }, 1500);
         }
 
         return () => { timeout && clearTimeout(timeout); }

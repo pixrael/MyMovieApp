@@ -1,8 +1,8 @@
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Button } from '@mui/material';
-import { authApi } from '../../api/authApi';
-import store from '../../app/store';
+import { authApi } from '../../store/api/authApi';
+import store from '../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 

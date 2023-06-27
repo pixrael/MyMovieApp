@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SearchInput from "../components/searchInput/SearchInput";
-import { useGetPopularMoviesQuery } from "../api/movieApi";
+import { useGetPopularMoviesQuery } from "../store/api/movieApi";
 import PaginationOutlined from "../components/pagination/PaginationOutlined";
 import PopularImageList from "../components/popularImageList/PopularImageList";
 import SearchMovies from "../components/searchMovies/SearchMovies";

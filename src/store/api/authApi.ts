@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { URL_TMBD_API } from '../constants';
+import { URL_TMBD_API } from '../../constants';
 import { SerializedError } from '@reduxjs/toolkit';
 
 const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;

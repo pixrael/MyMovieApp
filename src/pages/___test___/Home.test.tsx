@@ -2,23 +2,29 @@ import { render } from '@testing-library/react';
 import Home from '../Home';
 import { BrowserRouter } from 'react-router-dom';
 
-import { useGetDetailsMovieQuery, useGetPopularMoviesQuery } from '../../api/movieApi';
+import { useGetDetailsMovieQuery, useGetPopularMoviesQuery } from '../../store/api/movieApi';
 import { scenario1, scenario2, scenario3, scenario4 } from './scenarios';
-import { clickPage, findElemImgDisplayedMovies, findElemYearDisplayedMovies, getAllItemsDisplayedMovies, getElemImgDisplayedMovies, getElemTitleDisplayedMovies, getElemYearDisplayedMovies,  queryCircleProgressElement, getCircleProgressElement } from './Home.pom';
+import { clickPage, findElemImgDisplayedMovies, findElemYearDisplayedMovies, getAllItemsDisplayedMovies, getElemImgDisplayedMovies, getElemTitleDisplayedMovies, getElemYearDisplayedMovies, queryCircleProgressElement, getCircleProgressElement } from './Home.pom';
 
-jest.mock('../../app/store', () => {
+jest.mock('../../store/slice/detailModalSlice', () => {
+    return (state: any) => false;
+});
+
+
+jest.mock('../../store/store', () => {
     return {
         dispatch: jest.fn()
     };
 });
 
-jest.mock('../../app/store', () => {
+jest.mock('../../store/store', () => {
     return {
-        dispatch: jest.fn()
+        dispatch: jest.fn(),
+        getState: jest.fn(),
     };
 });
 
-jest.mock('../../api/movieApi', () => {
+jest.mock('../../store/api/movieApi', () => {
     return {
         useGetPopularMoviesQuery: jest.fn(),
         useGetDetailsMovieQuery: jest.fn(),
@@ -27,7 +33,7 @@ jest.mock('../../api/movieApi', () => {
 
 const MockHome = () => (
     <BrowserRouter>
-        <Home />
+            <Home />
     </BrowserRouter>
 )
 

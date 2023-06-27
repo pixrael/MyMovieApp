@@ -1,4 +1,4 @@
-import { useGetPopularMoviesQuery } from "../../api/movieApi";
+import { useGetPopularMoviesQuery } from "../../store/api/movieApi";
 import GalleryImageList from "../galleryImageList/GalleryImageList";
 import { SerializedError } from "@reduxjs/toolkit";
 import useModal from "../../hooks/useModal";

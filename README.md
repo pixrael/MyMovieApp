@@ -36,32 +36,35 @@ To test used the library testing-library/react
 
 
 ## Using the app
-*User can navigate between 2 routes: home ('/') and My List ('mylist')
-*User can loggin as a guest by clicking the button "Login as guest" in the navbar or "Logins as guest to rate" in the details of a movie.
-*User can see a list of popular movies in home section
-*User can see the details of a specific movie in a modal when the user click the info button 
-*User can rate a movie from the detail modal using 
-*User can see the list of rated movies, 
+* User can navigate between 2 routes: home ('/') and My List ('mylist').
+* User can loggin as a guest by clicking the button "Login as guest" in the navbar or "Logins as guest to rate" in the details of a movie.
+* User can see a list of popular movies in home section
+* User can see the details of a specific movie in a modal when the user click the info button 
+* User can rate a movie from the detail modal using 
+* User can see the list of rated movies, 
     -if the user is not logged as guest then in the section "My List" will show a message asking to login as guest.
     -if the user is logged as guest but haven rated any movie then in the section "My List" will show a message asking to rate a movie.
-*User can logout as guest, IMPORTANT every time the user logout and loggin as guest again the session will be reseted so the list of rated movies will be erased.
-*User can search movies in the "Home" section.
+* User can logout as guest, IMPORTANT every time the user logout and loggin as guest again the session will be reseted so the list of rated movies will be erased.
+* User can search movies in the "Home" section.
 
 ## Regarding the store, slice and api
-Two api were created, "src\store\api\authApi.ts" and "src\store\api\movieApi.ts". 
-    *authApi is to manage the request to login as guest and logout 
-    *movieApi is all the request to load, get details,  search,  rate popular movies and list my rated movies. When the user rates a movie, the cache of rated movie list is invalidated by providing the tag "MyRatedMovies" to the key "invalidatesTags" this is way every time the user rates a new movie the list of my rated movies is fetched again from the server.
-    *src\store\slice\detailModalSlice.ts is an slice to manage the block state of the modal of details, this probably will be used in the future to prevent the user exist from the modal to quick.
+"src\store\" contains the api and the slice
+* authApi is to manage the request to login as guest and logout 
+* movieApi is all the request to load, get details,  search,  rate popular movies and list my rated movies. When the user rates a movie, the cache of rated movie list is invalidated by providing the tag "MyRatedMovies" to the key "invalidatesTags" this is way every time the user rates a new movie the list of my rated movies is fetched again from the server.
+* src\store\slice\detailModalSlice.ts is an slice to manage the block state of the modal of details, this probably will be used in the future to prevent the user exist from the modal to quick.
 
 
 ## Regarding the tests
-Part of the functionality of the home was tested, mocking server responses in different scenarios in order to test cases when the data have not arrived and when the data is already arrived. Inside the folder "src\pages\___test___" there are a pom file to follow the pattern "Page object model" and keep in a different layer the access to the page, the file "mocks.ts" with two objects used as mocks responses from the server request for popular movies, "scenarios.ts" are objects to encapsulate different scenarios to test and "Home.test.ts" where is placed the test.
-*Home.test.ts contains test to load the popular images, change to other page and display the progress icon.
+Part of the functionality of the home was tested, mocking server responses in different scenarios in order to test cases when the data have not arrived and when the data is already arrived. 
+
+Inside the folder "src\pages\___test___" there are a pom file to follow the pattern "Page object model" and keep in a different layer the access to the page, the file "mocks.ts" with two objects used as mocks responses from the server request for popular movies, "scenarios.ts" are objects to encapsulate different scenarios to test and "Home.test.ts" where is placed the test.
+
+* Home.test.ts contains test to load the popular images, change to other page and display the progress icon.
 
 
 
 ## Folder structure of the project
-Really basic structure, 
+Basic structure, 
 * src\components: Contains all the components except the components App, Home and MyList.
 * src\hooks: Contains the needed hooks, for now there is only a utility hook to manage the state of the modal.
 * src\pages: Contains the pages of the project, for now the Home and MyList pages.

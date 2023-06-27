@@ -25,13 +25,14 @@ export default function GalleryImageList({ imagesData, onSelectedMovie }: {
       cols={4}
       rowHeight={121}
     >
-      {imagesData.map((item) => (
+      {imagesData.map((item, index) => (
 
-        <ImageListItem key={item.id} cols={item.cols || 1} rows={item.rows || 1}>
+        <ImageListItem data-testid={`item-${index}`} key={item.id} cols={item.cols || 1} rows={item.rows || 1}>
           <img
             {...srcset(item.poster_path, 121, item.rows, item.cols)}
             alt={item.title}
             loading="lazy"
+            data-testid={`img-poster-${index}`}
           />
           <ImageListItemBar
             title={item.title}
@@ -43,6 +44,7 @@ export default function GalleryImageList({ imagesData, onSelectedMovie }: {
                 onClick={() => {
                   onSelectedMovie(item.id);
                 }}
+                data-testid={`info-button-${index}`}
               >
                 <InfoIcon />
               </IconButton>

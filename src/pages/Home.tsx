@@ -32,7 +32,7 @@ function Home() {
         {!searchKeyword && <PopularImageList page={page} />}
         {searchKeyword && <SearchMovies query={searchKeyword} page={page} />}
         <PaginationOutlined count={isSuccess ? movies.total_pages : 5} isDisabled={isLoading || isError} onPageChange={onPageChange} />
-        {isLoading && <CircularProgress />}
+        {isLoading && <CircularProgress data-testid='circular-progress' />}
         {isError && <>error: {(error as any).message}</>}
     </>)
 }

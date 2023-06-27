@@ -56,6 +56,8 @@ Two api were created, "src\store\api\authApi.ts" and "src\store\api\movieApi.ts"
 
 ## Regarding the tests
 Part of the functionality of the home was tested, mocking server responses in different scenarios in order to test cases when the data have not arrived and when the data is already arrived. Inside the folder "src\pages\___test___" there are a pom file to follow the pattern "Page object model" and keep in a different layer the access to the page, the file "mocks.ts" with two objects used as mocks responses from the server request for popular movies, "scenarios.ts" are objects to encapsulate different scenarios to test and "Home.test.ts" where is placed the test.
+*Home.test.ts contains test to load the popular images, change to other page and display the progress icon.
+
 
 
 ## Folder structure of the project

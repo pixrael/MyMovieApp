@@ -5,9 +5,10 @@ import { getYearFromDate } from '../utils/utils';
 
 const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
-export const movieSlice = createApi({
+export const movieApi = createApi({
   reducerPath: 'movies',
   baseQuery: fetchBaseQuery({ baseUrl: URL_TMBD_API }),
+  tagTypes: ['MyRatedMovies'],
   endpoints: builder => ({
     getPopularMovies: builder.query({
       query: (page: number) => `/movie/popular?api_key=${TMDB_API_KEY}&page=${page}`,
@@ -53,15 +54,23 @@ export const movieSlice = createApi({
         method: 'POST',
         body
       }),
-
-
+      invalidatesTags: ['MyRatedMovies'],
       transformErrorResponse: (error: any) => <SerializedError>(
         {
           message: error.data.status_message,
           code: error.data.status_code
         })
     }),
+    getMyRatedMovies: builder.query({
+      query: ({ page, sortBy, sessionId }: { page: number, sortBy: 'created_at.asc' | 'created_at.desc', sessionId: string }) => `/guest_session/${sessionId}/rated/movies?api_key=${TMDB_API_KEY}&page=${page}&sort_by=${sortBy}`,
+      providesTags: ['MyRatedMovies'],
+      transformErrorResponse: (error: any) => <SerializedError>(
+        {
+          message: error.data.status_message,
+          code: error.data.status_code
+        })
+    })
   })
 })
 
-export const { useGetPopularMoviesQuery, useSearchMovieQuery, useGetDetailsMovieQuery, useRateMovieMutation } = movieSlice
+export const { useGetPopularMoviesQuery, useSearchMovieQuery, useGetDetailsMovieQuery, useRateMovieMutation, useGetMyRatedMoviesQuery } = movieApi

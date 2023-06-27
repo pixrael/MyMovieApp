@@ -1,4 +1,3 @@
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,7 +15,7 @@ import { authSlice, selectSessionId } from '../../api/authSlice';
 import { useSelector } from 'react-redux';
 import { Alert, Snackbar } from '@mui/material';
 import { useState } from 'react';
-import LoggedGuestButton from '../LoggedGuestButton/LoggedGuestButton';
+import LoggedGuestButton from '../loggedGuestButton/LoggedGuestButton';
 
 
 const pages = [
@@ -27,7 +26,7 @@ const pages = [
 
 function Navbar() {
     const navigate = useNavigate();
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -38,7 +37,6 @@ function Navbar() {
     };
 
     const redirectToPage = (pathTo: string) => {
-        console.log('redirect to ', pathTo);
         navigate(pathTo);
     }
 

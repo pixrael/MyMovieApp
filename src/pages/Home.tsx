@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Navbar from "../components/navbar/Navbar";
 import SearchInput from "../components/searchInput/SearchInput";
 import { useGetPopularMoviesQuery } from "../api/movieSlice";
 import PaginationOutlined from "../components/pagination/PaginationOutlined";
@@ -26,7 +25,7 @@ function Home() {
         isError
     } = useGetPopularMoviesQuery(1)
 
-    return (<>        
+    return (<>
         <SearchInput onSearch={onSearch} />
         {!searchKeyword && <PopularImageList page={page} />}
         {searchKeyword && <SearchMovies query={searchKeyword} page={page} />}

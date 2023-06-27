@@ -1,7 +1,7 @@
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Button } from '@mui/material';
-import { authSlice } from '../../api/authSlice';
+import { authApi } from '../../api/authApi';
 import store from '../../app/store';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -18,12 +18,12 @@ export default function LoggedGuestButton() {
     };
 
     const logout = () => {
-        store.dispatch(authSlice.util.resetApiState())
+        store.dispatch(authApi.util.resetApiState())
         setAnchorEl(null);
     };
 
     const redirectToMyList = ()=>{
-        navigate('/my-list');
+        navigate('/mylist');
     }
 
     return (

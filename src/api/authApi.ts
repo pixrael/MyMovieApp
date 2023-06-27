@@ -4,7 +4,7 @@ import { SerializedError } from '@reduxjs/toolkit';
 
 const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
-export const authSlice = createApi({
+export const authApi = createApi({
   reducerPath: 'guestSession',
   baseQuery: fetchBaseQuery({ baseUrl: URL_TMBD_API }),
   endpoints: builder => ({
@@ -26,7 +26,7 @@ export const authSlice = createApi({
 
 export const selectSessionId = (state: any) => {
   
-  const sessionQuery = authSlice.endpoints.getSessionId.select({})(state) as any;
+  const sessionQuery = authApi.endpoints.getSessionId.select({})(state) as any;
 
   if (sessionQuery.isLoading || sessionQuery.isFetching) {
     // Query is still loading
@@ -41,5 +41,5 @@ export const selectSessionId = (state: any) => {
   return sessionQuery.data?.guestSessionId || null;
 };
 
-export const { useGetSessionIdQuery } = authSlice;
+export const { useGetSessionIdQuery } = authApi;
 

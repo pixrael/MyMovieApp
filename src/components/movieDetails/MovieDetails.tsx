@@ -1,10 +1,10 @@
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { useGetDetailsMovieQuery } from "../../api/movieSlice";
+import { useGetDetailsMovieQuery } from "../../api/movieApi";
 import { SerializedError } from "@reduxjs/toolkit";
 import './MovieDetails.scss'
 import { IMG_BASE_URL } from "../../constants";
 import store from "../../app/store";
-import { authSlice, selectSessionId } from "../../api/authSlice";
+import { authApi, selectSessionId } from "../../api/authApi";
 import { useSelector } from "react-redux";
 import AddRateSlider from "../addRate/AddRate";
 
@@ -19,7 +19,7 @@ function MovieDetails({ idMovie }: { idMovie: string }) {
     } = useGetDetailsMovieQuery(idMovie);
 
     const loginAsGuest = () => {
-        store.dispatch(authSlice.endpoints.getSessionId.initiate({}));
+        store.dispatch(authApi.endpoints.getSessionId.initiate({}));
     }
 
     const guestSessionData = useSelector(selectSessionId);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SearchInput from "../components/searchInput/SearchInput";
-import { useGetPopularMoviesQuery } from "../api/movieSlice";
+import { useGetPopularMoviesQuery } from "../api/movieApi";
 import PaginationOutlined from "../components/pagination/PaginationOutlined";
 import PopularImageList from "../components/popularImageList/PopularImageList";
 import SearchMovies from "../components/searchMovies/SearchMovies";
@@ -22,7 +22,8 @@ function Home() {
         data: movies,
         isLoading,
         isSuccess,
-        isError
+        isError,
+        error
     } = useGetPopularMoviesQuery(1)
 
     return (<>
@@ -30,6 +31,8 @@ function Home() {
         {!searchKeyword && <PopularImageList page={page} />}
         {searchKeyword && <SearchMovies query={searchKeyword} page={page} />}
         <PaginationOutlined count={isSuccess ? movies.total_pages : 5} isDisabled={isLoading || isError} onPageChange={onPageChange} />
+        {isLoading && <>is loading...</>}
+        {isError && <>error: {(error as any).message}</>}
     </>)
 }
 

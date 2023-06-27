@@ -5,9 +5,9 @@ import Box from '@mui/material/Box';
 import { Button, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import './AddRate.scss'
-import { useRateMovieMutation } from '../../api/movieSlice';
+import { useRateMovieMutation } from '../../api/movieApi';
 import { useSelector } from 'react-redux';
-import { selectSessionId } from '../../api/authSlice';
+import { selectSessionId } from '../../api/authApi';
 
 function ValueLabelComponent(props: SliderValueLabelProps) {
     const { children, value } = props;

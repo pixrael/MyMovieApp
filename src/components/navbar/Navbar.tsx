@@ -11,16 +11,15 @@ import MenuItem from '@mui/material/MenuItem';
 import MovieIcon from '@mui/icons-material/Movie';
 import { useNavigate } from 'react-router-dom';
 import store from '../../app/store';
-import { authSlice, selectSessionId } from '../../api/authSlice';
+import { authApi, selectSessionId } from '../../api/authApi';
 import { useSelector } from 'react-redux';
 import { Alert, Snackbar } from '@mui/material';
 import { useState } from 'react';
 import LoggedGuestButton from '../loggedGuestButton/LoggedGuestButton';
 
-
 const pages = [
     { label: 'Popular', redirectTo: '/' },
-    { label: 'My List', redirectTo: '/my-list' },
+    { label: 'My List', redirectTo: '/mylist' },
 
 ];
 
@@ -41,7 +40,7 @@ function Navbar() {
     }
 
     const loginAsGuest = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        store.dispatch(authSlice.endpoints.getSessionId.initiate({})).unwrap()
+        store.dispatch(authApi.endpoints.getSessionId.initiate({})).unwrap()
         .catch(err => {
             setErrorMsg(err.message);
             setOpen(true);

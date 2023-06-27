@@ -5,6 +5,7 @@ import useModal from "../../hooks/useModal";
 import { useState } from "react";
 import CustomModal from "../customModal/CustomModal";
 import MovieDetails from "../movieDetails/MovieDetails";
+import { CircularProgress } from "@mui/material";
 
 function PopularImageList({ page }: { page: number }) {
     const [showModal, open, close] = useModal();
@@ -25,7 +26,7 @@ function PopularImageList({ page }: { page: number }) {
     };
 
     return (<>
-        {isLoading && <>...is Loading</>}
+        {isLoading && <CircularProgress />}
         {isError && <>{`...There is an error ${error && error.message}`}</>}
         {isSuccess && <GalleryImageList imagesData={movies.results} onSelectedMovie={(id: string) => { setSelectedMovieId(id); open() }} />}
         {showModal && <CustomModal show={showModal} open={open} close={close} >

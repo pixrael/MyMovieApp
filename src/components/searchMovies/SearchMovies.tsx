@@ -5,6 +5,7 @@ import { SerializedError } from "@reduxjs/toolkit";
 import CustomModal from "../customModal/CustomModal";
 import { useState } from "react";
 import MovieDetails from "../movieDetails/MovieDetails";
+import { CircularProgress } from "@mui/material";
 
 function SearchMovies({ query, page }: { query: string, page: number }) {
     const [showModal, open, close] = useModal();
@@ -24,7 +25,7 @@ function SearchMovies({ query, page }: { query: string, page: number }) {
     };
 
     return (<>
-        {isLoading && <>...is Loading</>}
+        {isLoading && <CircularProgress />}
         {isError && <>{`...There is an error ${error && error.message}`}</>}
         {isSuccess && <GalleryImageList imagesData={movies.results} onSelectedMovie={(id: string) => { setSelectedMovieId(id); open() }} />}
         {showModal && <CustomModal show={showModal} open={open} close={close} >

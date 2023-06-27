@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Divider, Stack, Typography } from "@mui/material";
 import { useGetDetailsMovieQuery } from "../../api/movieApi";
 import { SerializedError } from "@reduxjs/toolkit";
 import './MovieDetails.scss'
@@ -25,7 +25,7 @@ function MovieDetails({ idMovie }: { idMovie: string }) {
     const guestSessionData = useSelector(selectSessionId);
 
     return (<>
-        {isLoading && <>is Loading ...</>}
+        {isLoading && <CircularProgress />}
         {isSuccess && <>
 
             <Stack

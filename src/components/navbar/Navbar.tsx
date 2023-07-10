@@ -15,7 +15,8 @@ import { authApi, selectSessionId } from '../../store/api/authApi';
 import { useSelector } from 'react-redux';
 import { Alert, Snackbar } from '@mui/material';
 import { useState } from 'react';
-import LoggedGuestButton from '../loggedGuestButton/LoggedGuestButton';
+import LoggedGuestButton from '../LoggedGuestButton/LoggedGuestButton';
+
 
 const pages = [
     { label: 'Popular', redirectTo: '/' },

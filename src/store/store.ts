@@ -13,6 +13,4 @@ export default configureStore({
         getDefaultMiddleware()
             .concat(movieApi.middleware)
             .concat(authApi.middleware)
-
-
 })
